@@ -222,7 +222,7 @@ syntax for the <code class="docutils literal"><span class="pre">Q_</span></code>
 units.</p>
 <div class="nbinput nblast docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [12]:
+<span></span>In [3]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -240,7 +240,7 @@ units of temperature are <code class="docutils literal"><span class="pre">degF</
 (<code class="docutils literal"><span class="pre">rankine</span></code>), <code class="docutils literal"><span class="pre">degC</span></code> (<code class="docutils literal"><span class="pre">celsius</span></code>), and <code class="docutils literal"><span class="pre">K</span></code> (<code class="docutils literal"><span class="pre">kelvin</span></code>).</p>
 <div class="nbinput nblast docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [8]:
+<span></span>In [4]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -254,7 +254,7 @@ units of temperature are <code class="docutils literal"><span class="pre">degF</
 <p>The two ways of creating the units are equivalent</p>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [9]:
+<span></span>In [5]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -264,7 +264,7 @@ units of temperature are <code class="docutils literal"><span class="pre">degF</
 </div>
 <div class="nboutput nblast docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>Out[9]:
+<span></span>Out[5]:
 </pre></div>
 </div>
 <div class="highlight-none"><div class="highlight"><pre>
@@ -288,7 +288,7 @@ substance we want to use with that state. Available substances are:</p>
 </ul>
 <div class="nbinput nblast docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [10]:
+<span></span>In [6]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -318,7 +318,7 @@ set the state!</p>
 </div>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [14]:
+<span></span>In [7]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -331,12 +331,12 @@ set the state!</p>
 </div>
 <div class="docutils container">
 <div class="highlight"><pre>
-T = 300 kelvin, p = 1.0 atmosphere
+T = 400 kelvin, p = 1.0 atmosphere
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [15]:
+<span></span>In [8]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -375,7 +375,7 @@ mass-specific quantities.</p>
 </div>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [19]:
+<span></span>In [9]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -386,6 +386,8 @@ mass-specific quantities.</p>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;h_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">h</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;s_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">s</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;x_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;cp_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">cp</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;cv_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">cv</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -394,13 +396,15 @@ mass-specific quantities.</p>
 </div>
 <div class="docutils container">
 <div class="highlight"><pre>
-T_1 = 300 kelvin
+T_1 = 400 kelvin
 p_1 = 101325.0 pascal
-v_1 = 0.0010034549603870667 meter ** 3 / kilogram
-u_1 = 112553.2245807535 joule / kilogram
-h_1 = 112654.8996546125 joule / kilogram
-s_1 = 393.0620684406139 joule / kelvin / kilogram
+v_1 = 1.801983936953226 meter ** 3 / kilogram
+u_1 = 2547715.3635084038 joule / kilogram
+h_1 = 2730301.3859201893 joule / kilogram
+s_1 = 7496.2021523754065 joule / kelvin / kilogram
 x_1 = None
+cp_1 = 2009.2902478486988 joule / kelvin / kilogram
+cv_1 = 1509.1482452129906 joule / kelvin / kilogram
 </pre></div></div>
 </div>
 <p>In this case, the value for the quality is the special Python value
@@ -414,7 +418,7 @@ define the quality, the units are <code class="docutils literal"><span class="pr
 instance:</p>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [20]:
+<span></span>In [10]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -448,7 +452,7 @@ x_2 = 0.1 dimensionless
 </div>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [21]:
+<span></span>In [11]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -458,7 +462,7 @@ x_2 = 0.1 dimensionless
 </div>
 <div class="nboutput nblast docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>Out[21]:
+<span></span>Out[11]:
 </pre></div>
 </div>
 <div class="highlight-none"><div class="highlight"><pre>
@@ -473,7 +477,7 @@ convert the units to anything we want, provided the dimensions are
 compatible. The syntax is <code class="docutils literal"><span class="pre">State.property.to('units')</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [22]:
+<span></span>In [12]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -507,7 +511,7 @@ incompatible!</p>
 </div>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [23]:
+<span></span>In [13]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -520,33 +524,33 @@ incompatible!</p>
 </div>
 <div class="docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">DimensionalityError</span>                       Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-23-379f41de7202&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-red-fg">DimensionalityError</span>Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-13-379f41de7202&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>st_2<span class="ansi-blue-fg">.</span>T<span class="ansi-blue-fg">.</span>to<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;joule&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/Users/bryan/anaconda3/lib/python3.5/site-packages/pint/quantity.py</span> in <span class="ansi-cyan-fg">to</span><span class="ansi-blue-fg">(self, other, *contexts, **ctx_kwargs)</span>
+<span class="ansi-green-fg">/home/travis/miniconda/envs/test-environment/lib/python3.5/site-packages/pint/quantity.py</span> in <span class="ansi-cyan-fg">to</span><span class="ansi-blue-fg">(self, other, *contexts, **ctx_kwargs)</span>
 <span class="ansi-green-intense-fg ansi-bold">    261</span>         other <span class="ansi-blue-fg">=</span> to_units_container<span class="ansi-blue-fg">(</span>other<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_REGISTRY<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    262</span>
 <span class="ansi-green-fg">--&gt; 263</span><span class="ansi-red-fg">         </span>magnitude <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_convert_magnitude_not_inplace<span class="ansi-blue-fg">(</span>other<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>contexts<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>ctx_kwargs<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    264</span>
 <span class="ansi-green-intense-fg ansi-bold">    265</span>         <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>__class__<span class="ansi-blue-fg">(</span>magnitude<span class="ansi-blue-fg">,</span> other<span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/Users/bryan/anaconda3/lib/python3.5/site-packages/pint/quantity.py</span> in <span class="ansi-cyan-fg">_convert_magnitude_not_inplace</span><span class="ansi-blue-fg">(self, other, *contexts, **ctx_kwargs)</span>
+<span class="ansi-green-fg">/home/travis/miniconda/envs/test-environment/lib/python3.5/site-packages/pint/quantity.py</span> in <span class="ansi-cyan-fg">_convert_magnitude_not_inplace</span><span class="ansi-blue-fg">(self, other, *contexts, **ctx_kwargs)</span>
 <span class="ansi-green-intense-fg ansi-bold">    229</span>                 <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_REGISTRY<span class="ansi-blue-fg">.</span>convert<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_magnitude<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_units<span class="ansi-blue-fg">,</span> other<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    230</span>
 <span class="ansi-green-fg">--&gt; 231</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_REGISTRY<span class="ansi-blue-fg">.</span>convert<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_magnitude<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_units<span class="ansi-blue-fg">,</span> other<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    232</span>
 <span class="ansi-green-intense-fg ansi-bold">    233</span>     <span class="ansi-green-fg">def</span> _convert_magnitude<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> other<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>contexts<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>ctx_kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
-<span class="ansi-green-fg">/Users/bryan/anaconda3/lib/python3.5/site-packages/pint/unit.py</span> in <span class="ansi-cyan-fg">convert</span><span class="ansi-blue-fg">(self, value, src, dst, inplace)</span>
+<span class="ansi-green-fg">/home/travis/miniconda/envs/test-environment/lib/python3.5/site-packages/pint/unit.py</span> in <span class="ansi-cyan-fg">convert</span><span class="ansi-blue-fg">(self, value, src, dst, inplace)</span>
 <span class="ansi-green-intense-fg ansi-bold">   1024</span>         dst <span class="ansi-blue-fg">=</span> to_units_container<span class="ansi-blue-fg">(</span>dst<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">   1025</span>
 <span class="ansi-green-fg">-&gt; 1026</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_convert<span class="ansi-blue-fg">(</span>value<span class="ansi-blue-fg">,</span> src<span class="ansi-blue-fg">,</span> dst<span class="ansi-blue-fg">,</span> inplace<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">   1027</span>
 <span class="ansi-green-intense-fg ansi-bold">   1028</span>     <span class="ansi-green-fg">def</span> _convert<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> value<span class="ansi-blue-fg">,</span> src<span class="ansi-blue-fg">,</span> dst<span class="ansi-blue-fg">,</span> inplace<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
-<span class="ansi-green-fg">/Users/bryan/anaconda3/lib/python3.5/site-packages/pint/unit.py</span> in <span class="ansi-cyan-fg">_convert</span><span class="ansi-blue-fg">(self, value, src, dst, inplace)</span>
+<span class="ansi-green-fg">/home/travis/miniconda/envs/test-environment/lib/python3.5/site-packages/pint/unit.py</span> in <span class="ansi-cyan-fg">_convert</span><span class="ansi-blue-fg">(self, value, src, dst, inplace)</span>
 <span class="ansi-green-intense-fg ansi-bold">   1061</span>
 <span class="ansi-green-intense-fg ansi-bold">   1062</span>         <span class="ansi-green-fg">if</span> src_dim <span class="ansi-blue-fg">!=</span> dst_dim<span class="ansi-blue-fg">:</span>
 <span class="ansi-green-fg">-&gt; 1063</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> DimensionalityError<span class="ansi-blue-fg">(</span>src<span class="ansi-blue-fg">,</span> dst<span class="ansi-blue-fg">,</span> src_dim<span class="ansi-blue-fg">,</span> dst_dim<span class="ansi-blue-fg">)</span>
@@ -569,7 +573,7 @@ dimensions are incompatible. A more subtle case might be trying to
 convert <strong>energy</strong> to <strong>power</strong> (again, not allowed):</p>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [24]:
+<span></span>In [14]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
@@ -582,33 +586,33 @@ convert <strong>energy</strong> to <strong>power</strong> (again, not allowed):<
 </div>
 <div class="docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">DimensionalityError</span>                       Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-24-cac318a02a37&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+
+<span class="ansi-red-fg">DimensionalityError</span>Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-14-cac318a02a37&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>Q_<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1000.0</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;joule&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>to<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;watt&#39;</span><span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/Users/bryan/anaconda3/lib/python3.5/site-packages/pint/quantity.py</span> in <span class="ansi-cyan-fg">to</span><span class="ansi-blue-fg">(self, other, *contexts, **ctx_kwargs)</span>
+<span class="ansi-green-fg">/home/travis/miniconda/envs/test-environment/lib/python3.5/site-packages/pint/quantity.py</span> in <span class="ansi-cyan-fg">to</span><span class="ansi-blue-fg">(self, other, *contexts, **ctx_kwargs)</span>
 <span class="ansi-green-intense-fg ansi-bold">    261</span>         other <span class="ansi-blue-fg">=</span> to_units_container<span class="ansi-blue-fg">(</span>other<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_REGISTRY<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    262</span>
 <span class="ansi-green-fg">--&gt; 263</span><span class="ansi-red-fg">         </span>magnitude <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_convert_magnitude_not_inplace<span class="ansi-blue-fg">(</span>other<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>contexts<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>ctx_kwargs<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    264</span>
 <span class="ansi-green-intense-fg ansi-bold">    265</span>         <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>__class__<span class="ansi-blue-fg">(</span>magnitude<span class="ansi-blue-fg">,</span> other<span class="ansi-blue-fg">)</span>
 
-<span class="ansi-green-fg">/Users/bryan/anaconda3/lib/python3.5/site-packages/pint/quantity.py</span> in <span class="ansi-cyan-fg">_convert_magnitude_not_inplace</span><span class="ansi-blue-fg">(self, other, *contexts, **ctx_kwargs)</span>
+<span class="ansi-green-fg">/home/travis/miniconda/envs/test-environment/lib/python3.5/site-packages/pint/quantity.py</span> in <span class="ansi-cyan-fg">_convert_magnitude_not_inplace</span><span class="ansi-blue-fg">(self, other, *contexts, **ctx_kwargs)</span>
 <span class="ansi-green-intense-fg ansi-bold">    229</span>                 <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_REGISTRY<span class="ansi-blue-fg">.</span>convert<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_magnitude<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_units<span class="ansi-blue-fg">,</span> other<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    230</span>
 <span class="ansi-green-fg">--&gt; 231</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_REGISTRY<span class="ansi-blue-fg">.</span>convert<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_magnitude<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_units<span class="ansi-blue-fg">,</span> other<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">    232</span>
 <span class="ansi-green-intense-fg ansi-bold">    233</span>     <span class="ansi-green-fg">def</span> _convert_magnitude<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> other<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>contexts<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>ctx_kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
-<span class="ansi-green-fg">/Users/bryan/anaconda3/lib/python3.5/site-packages/pint/unit.py</span> in <span class="ansi-cyan-fg">convert</span><span class="ansi-blue-fg">(self, value, src, dst, inplace)</span>
+<span class="ansi-green-fg">/home/travis/miniconda/envs/test-environment/lib/python3.5/site-packages/pint/unit.py</span> in <span class="ansi-cyan-fg">convert</span><span class="ansi-blue-fg">(self, value, src, dst, inplace)</span>
 <span class="ansi-green-intense-fg ansi-bold">   1024</span>         dst <span class="ansi-blue-fg">=</span> to_units_container<span class="ansi-blue-fg">(</span>dst<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">   1025</span>
 <span class="ansi-green-fg">-&gt; 1026</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_convert<span class="ansi-blue-fg">(</span>value<span class="ansi-blue-fg">,</span> src<span class="ansi-blue-fg">,</span> dst<span class="ansi-blue-fg">,</span> inplace<span class="ansi-blue-fg">)</span>
 <span class="ansi-green-intense-fg ansi-bold">   1027</span>
 <span class="ansi-green-intense-fg ansi-bold">   1028</span>     <span class="ansi-green-fg">def</span> _convert<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> value<span class="ansi-blue-fg">,</span> src<span class="ansi-blue-fg">,</span> dst<span class="ansi-blue-fg">,</span> inplace<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
 
-<span class="ansi-green-fg">/Users/bryan/anaconda3/lib/python3.5/site-packages/pint/unit.py</span> in <span class="ansi-cyan-fg">_convert</span><span class="ansi-blue-fg">(self, value, src, dst, inplace)</span>
+<span class="ansi-green-fg">/home/travis/miniconda/envs/test-environment/lib/python3.5/site-packages/pint/unit.py</span> in <span class="ansi-cyan-fg">_convert</span><span class="ansi-blue-fg">(self, value, src, dst, inplace)</span>
 <span class="ansi-green-intense-fg ansi-bold">   1061</span>
 <span class="ansi-green-intense-fg ansi-bold">   1062</span>         <span class="ansi-green-fg">if</span> src_dim <span class="ansi-blue-fg">!=</span> dst_dim<span class="ansi-blue-fg">:</span>
 <span class="ansi-green-fg">-&gt; 1063</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">raise</span> DimensionalityError<span class="ansi-blue-fg">(</span>src<span class="ansi-blue-fg">,</span> dst<span class="ansi-blue-fg">,</span> src_dim<span class="ansi-blue-fg">,</span> dst_dim<span class="ansi-blue-fg">)</span>
@@ -628,7 +632,7 @@ set the conditions of a State. Then, we can access the other properties
 of the State by using the attributes.</p>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
-<span></span>In [30]:
+<span></span>In [15]:
 </pre></div>
 </div>
 <div class="highlight-ipython3"><div class="highlight"><pre>
