@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tutorial &#8212; thermostate 0.1.6 documentation</title>
+    <title>Tutorial &#8212; thermostate 0.1.7 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1.6',
+        VERSION:     '0.1.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -251,7 +251,8 @@ units of temperature are <code class="docutils literal"><span class="pre">degF</
 </pre></div>
 </div>
 </div>
-<p>The two ways of creating the units are equivalent</p>
+<p>The two ways of creating the units are equivalent. The following cell
+should print <code class="docutils literal"><span class="pre">True</span></code> to demonstrate this.</p>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
 <span></span>In [5]:
@@ -276,15 +277,17 @@ units of temperature are <code class="docutils literal"><span class="pre">degF</
 <div class="section" id="ThermoState">
 <h2>ThermoState<a class="headerlink" href="#ThermoState" title="Permalink to this headline">¶</a></h2>
 <p>Now that we have defined two properties with units, let&#8217;s define a
-state. First, we create a variable to hold the State and tell what
-substance we want to use with that state. Available substances are:</p>
+state. First, we create a variable to hold the <code class="docutils literal"><span class="pre">State</span></code> and tell
+ThermoState what substance we want to use with that state. The available
+substances are:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">water</span></code></li>
 <li><code class="docutils literal"><span class="pre">air</span></code></li>
 <li><code class="docutils literal"><span class="pre">R134a</span></code></li>
 <li><code class="docutils literal"><span class="pre">R22</span></code></li>
 <li><code class="docutils literal"><span class="pre">propane</span></code></li>
-<li><code class="docutils literal"><span class="pre">ammonia</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">ammonia</span></code></li>
+<li><code class="docutils literal"><span class="pre">isobutane</span></code></li>
 </ul>
 <div class="nbinput nblast docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
@@ -296,11 +299,13 @@ substance we want to use with that state. Available substances are:</p>
 </pre></div>
 </div>
 </div>
-<p>Now that the state is created, we need to assign values for the
-properties. Properties of the state are accessed as attributes, and they
-must always be set in pairs, we cannot set a single property at a time.
-In this case we will access the <code class="docutils literal"><span class="pre">Tp</span></code> property of the state and set it
-equal to the temperature and pressure we defined above. The syntax is</p>
+<p>Note that the name of the substance is case-insensitive (it doesn&#8217;t
+matter whether you use lower case or upper case). Now that the state is
+created, we need to assign values for the properties. Properties of the
+state are accessed as attributes, and they must always be set in pairs,
+we cannot set a single property at a time. In this case we will access
+the <code class="docutils literal"><span class="pre">Tp</span></code> property of the state and set it equal to the temperature and
+pressure we defined above. The syntax is</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">Tp</span> <span class="o">=</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span>
 </pre></div>
 </div>
@@ -345,13 +350,37 @@ T = 400 kelvin, p = 1.0 atmosphere
 </pre></div>
 </div>
 </div>
+<p>In theory, any two pairs of independent properties can be used to set
+the state. In reality, the pairs of properties available to set the
+state is slightly limited because of the way the equation of state is
+written (we will talk about this in Chapter 11). The available pairs of
+properties are</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">Tp</span></code></li>
+<li><code class="docutils literal"><span class="pre">Ts</span></code></li>
+<li><code class="docutils literal"><span class="pre">Tv</span></code></li>
+<li><code class="docutils literal"><span class="pre">Tx</span></code></li>
+<li><code class="docutils literal"><span class="pre">pu</span></code></li>
+<li><code class="docutils literal"><span class="pre">ps</span></code></li>
+<li><code class="docutils literal"><span class="pre">pv</span></code></li>
+<li><code class="docutils literal"><span class="pre">ph</span></code></li>
+<li><code class="docutils literal"><span class="pre">px</span></code></li>
+<li><code class="docutils literal"><span class="pre">uv</span></code></li>
+<li><code class="docutils literal"><span class="pre">sv</span></code></li>
+<li><code class="docutils literal"><span class="pre">hs</span></code></li>
+<li><code class="docutils literal"><span class="pre">hv</span></code></li>
+</ul>
+<p>The reverse of any of these pairs is also possible and totally
+equivalent, as demonstrated in the previous cell.</p>
 <p>By setting two properties in this way, the <code class="docutils literal"><span class="pre">State</span></code> class will
 calculate all the other properties we might be interested in. We can
 access the value of any property by getting the attribute for that
 property. The available properties are <code class="docutils literal"><span class="pre">T</span></code> (temperature), <code class="docutils literal"><span class="pre">p</span></code>
 (pressure), <code class="docutils literal"><span class="pre">v</span></code> (mass-specific volume), <code class="docutils literal"><span class="pre">u</span></code> (mass-specific internal
 energy), <code class="docutils literal"><span class="pre">h</span></code> (mass-specific enthalpy), <code class="docutils literal"><span class="pre">s</span></code> (mass-specific entropy),
-and <code class="docutils literal"><span class="pre">x</span></code> (quality). The syntax is</p>
+<code class="docutils literal"><span class="pre">x</span></code> (quality), <code class="docutils literal"><span class="pre">cp</span></code> (specific heat at constant pressure), <code class="docutils literal"><span class="pre">cv</span></code>
+(specific heat at constant volume), and <code class="docutils literal"><span class="pre">phase</span></code> (the phase of this
+state). The syntax is</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">State</span><span class="o">.</span><span class="n">property</span>
 </pre></div>
 </div>
@@ -365,6 +394,7 @@ and <code class="docutils literal"><span class="pre">x</span></code> (quality). 
 <span class="n">st_1</span><span class="o">.</span><span class="n">x</span>  <span class="c1"># Gets the quality</span>
 <span class="n">st_1</span><span class="o">.</span><span class="n">cp</span>  <span class="c1"># Gets the specific heat at constant pressure</span>
 <span class="n">st_1</span><span class="o">.</span><span class="n">cv</span>  <span class="c1"># Gets the specific heat at constant volume</span>
+<span class="n">st_1</span><span class="o">.</span><span class="n">phase</span>  <span class="c1"># Gets the phase at this state</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -388,6 +418,7 @@ mass-specific quantities.</p>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;x_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;cp_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">cp</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;cv_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">cv</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;phase_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">phase</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -405,6 +436,7 @@ s_1 = 7496.2021523754065 joule / kelvin / kilogram
 x_1 = None
 cp_1 = 2009.2902478486988 joule / kelvin / kilogram
 cv_1 = 1509.1482452129906 joule / kelvin / kilogram
+phase_1 = gas
 </pre></div></div>
 </div>
 <p>In this case, the value for the quality is the special Python value
@@ -424,8 +456,7 @@ instance:</p>
 <div class="highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">T_2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">100.0</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
 <span class="n">x_2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;dimensionless&#39;</span><span class="p">)</span>
-<span class="n">st_2</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">)</span>
-<span class="n">st_2</span><span class="o">.</span><span class="n">Tx</span> <span class="o">=</span> <span class="n">T_2</span><span class="p">,</span> <span class="n">x_2</span>
+<span class="n">st_2</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T_2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_2</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;T_2 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_2</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;p_2 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_2</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;v_2 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_2</span><span class="o">.</span><span class="n">v</span><span class="p">))</span>
@@ -450,6 +481,18 @@ s_2 = 1911.9019425021506 joule / kelvin / kilogram
 x_2 = 0.1 dimensionless
 </pre></div></div>
 </div>
+<div class="admonition note">
+<p class="first">This cell also demonstrates another way to set the state. Instead of
+first creating the <code class="docutils literal"><span class="pre">State</span></code> object and then setting the two properties,
+we can pass the properties in when the <code class="docutils literal"><span class="pre">State</span></code> is created</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">st</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>In addition, whether you use the <code class="docutils literal"><span class="pre">'dimensionless'</span></code> &#8220;units&#8221; for the
+quality as above, or use the <code class="docutils literal"><span class="pre">'percent'</span></code> &#8220;units&#8221;, the result is
+exactly equivalent. The next cell should print <code class="docutils literal"><span class="pre">True</span></code> to the screen to
+demonstrate this.</p>
 <div class="nbinput docutils container">
 <div class="highlight-none"><div class="highlight"><pre>
 <span></span>In [11]:
@@ -497,9 +540,9 @@ compatible. The syntax is <code class="docutils literal"><span class="pre">State
 </div>
 <div class="admonition note">
 <p class="first"><strong>Note:</strong></p>
-<p class="last">The values are always converted in the State to SI units, no matter what
-the input units are. Therefore, if you want EE units as an output, you
-have to convert.</p>
+<p class="last">The values are always converted in the <code class="docutils literal"><span class="pre">State</span></code> to SI units, no matter
+what the input units are. Therefore, if you want EE units as an output,
+you have to convert.</p>
 </div>
 <p>If we try to convert to a unit with incompatible dimensions, Pint will
 raise a <code class="docutils literal"><span class="pre">DimenstionalityError</span></code> exception.</p>
