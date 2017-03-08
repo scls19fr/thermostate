@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tutorial &#8212; thermostate 0.2.0 documentation</title>
+    <title>Tutorial &#8212; thermostate 0.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.0',
+        VERSION:     '0.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -50,13 +50,15 @@
 
 /* remove conflicting styling from Sphinx themes */
 div.nbinput,
-div.nbinput > div,
-div.nbinput div[class^=highlight],
-div.nbinput div[class^=highlight] pre,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
 div.nboutput,
-div.nboutput > div,
-div.nboutput div[class^=highlight],
-div.nboutput div[class^=highlight] pre {
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
     background: none;
     border: none;
     padding: 0 0;
@@ -65,7 +67,7 @@ div.nboutput div[class^=highlight] pre {
 }
 
 /* avoid gaps between output lines */
-div.nboutput div[class^=highlight] pre {
+div.nboutput div[class*=highlight] pre {
     line-height: normal;
 }
 
@@ -76,6 +78,13 @@ div.nboutput {
     display: flex;
     align-items: flex-start;
     margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
 }
 
 /* input container */
@@ -89,38 +98,58 @@ div.nblast {
 }
 
 /* input prompt */
-div.nbinput > :first-child pre {
+div.nbinput div.prompt pre {
     color: #303F9F;
 }
 
 /* output prompt */
-div.nboutput > :first-child pre {
+div.nboutput div.prompt pre {
     color: #D84315;
 }
 
 /* all prompts */
-div.nbinput > :first-child[class^=highlight],
-div.nboutput > :first-child[class^=highlight],
-div.nboutput > :first-child {
-    min-width: 9ex;
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
     padding-top: 0.4em;
     padding-right: 0.4em;
     text-align: right;
     flex: 0;
 }
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
 
 /* input/output area */
-div.nbinput > :nth-child(2)[class^=highlight],
-div.nboutput > :nth-child(2),
-div.nboutput > :nth-child(2)[class^=highlight] {
+div.nbinput div.input_area,
+div.nboutput div.output_area {
     padding: 0.4em;
     -webkit-flex: 1;
     flex: 1;
     overflow: auto;
 }
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
 
 /* input area */
-div.nbinput > :nth-child(2)[class^=highlight] {
+div.nbinput div.input_area {
     border: 1px solid #cfcfcf;
     border-radius: 2px;
     background: #f7f7f7;
@@ -137,7 +166,7 @@ div.nboutput div.math p {
 }
 
 /* standard error */
-div.nboutput  > :nth-child(2).stderr {
+div.nboutput div.output_area.stderr {
     background: #fdd;
 }
 
@@ -191,17 +220,18 @@ evaluation in any unit system. The first thing we need to do is import
 the parts of ThermoState that we will use. This adds them to the set of
 local variables</p>
 <div class="nbinput nblast docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">thermostate</span> <span class="kn">import</span> <span class="n">State</span><span class="p">,</span> <span class="n">Q_</span><span class="p">,</span> <span class="n">units</span>
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="Pint-and-Units">
-<h2>Pint and Units<a class="headerlink" href="#Pint-and-Units" title="Permalink to this headline">¶</a></h2>
+<h1>Pint and Units<a class="headerlink" href="#Pint-and-Units" title="Permalink to this headline">¶</a></h1>
 <p>Now that the interface has been imported, we can create some properties.
 For instance, let&#8217;s say we&#8217;re given the pressure and temperature
 properties for water, and asked to determine the specific volume. First,
@@ -209,11 +239,11 @@ let&#8217;s create variables that set the pressure and temperature. We will
 use the Pint <code class="docutils literal"><span class="pre">Quantity</span></code> function, which we have called <code class="docutils literal"><span class="pre">Q_</span></code>. The
 syntax for the <code class="docutils literal"><span class="pre">Q_</span></code> function is <code class="docutils literal"><span class="pre">Q_(value,</span> <span class="pre">'units')</span></code>.</p>
 <div class="nbinput nblast docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">p_1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mi">101325</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -221,11 +251,11 @@ syntax for the <code class="docutils literal"><span class="pre">Q_</span></code>
 <p>We can use whatever units we&#8217;d like, Pint supports a wide variety of
 units.</p>
 <div class="nbinput nblast docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [3]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">p_1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">1.01325</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
 <span class="n">p_1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">14.7</span><span class="p">,</span> <span class="s1">&#39;psi&#39;</span><span class="p">)</span>
 <span class="n">p_1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
@@ -239,11 +269,11 @@ a number with the unit. Let&#8217;s set the temperature now. The available
 units of temperature are <code class="docutils literal"><span class="pre">degF</span></code> (<code class="docutils literal"><span class="pre">fahrenheit</span></code>), <code class="docutils literal"><span class="pre">degR</span></code>
 (<code class="docutils literal"><span class="pre">rankine</span></code>), <code class="docutils literal"><span class="pre">degC</span></code> (<code class="docutils literal"><span class="pre">celsius</span></code>), and <code class="docutils literal"><span class="pre">K</span></code> (<code class="docutils literal"><span class="pre">kelvin</span></code>).</p>
 <div class="nbinput nblast docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [4]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">T_1</span> <span class="o">=</span> <span class="mi">460</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">degR</span>
 <span class="n">T_1</span> <span class="o">=</span> <span class="mi">25</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">degC</span>
 <span class="n">T_1</span> <span class="o">=</span> <span class="mi">75</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">degF</span>
@@ -254,28 +284,28 @@ units of temperature are <code class="docutils literal"><span class="pre">degF</
 <p>The two ways of creating the units are equivalent. The following cell
 should print <code class="docutils literal"><span class="pre">True</span></code> to demonstrate this.</p>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [5]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">Q_</span><span class="p">(</span><span class="mi">101325</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="mf">1.0</span><span class="o">*</span><span class="n">units</span><span class="o">.</span><span class="n">atm</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>Out[5]:
 </pre></div>
 </div>
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>True
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="ThermoState">
-<h2>ThermoState<a class="headerlink" href="#ThermoState" title="Permalink to this headline">¶</a></h2>
+<h1>ThermoState<a class="headerlink" href="#ThermoState" title="Permalink to this headline">¶</a></h1>
 <p>Now that we have defined two properties with units, let&#8217;s define a
 state. First, we create a variable to hold the <code class="docutils literal"><span class="pre">State</span></code> and tell
 ThermoState what substance we want to use with that state. The available
@@ -290,11 +320,11 @@ substances are:</p>
 <li><code class="docutils literal"><span class="pre">isobutane</span></code></li>
 </ul>
 <div class="nbinput nblast docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">st_1</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -322,29 +352,29 @@ time).</p>
 set the state!</p>
 </div>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [7]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;T = {}, p = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">T_1</span><span class="p">,</span> <span class="n">p_1</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
 T = 400 kelvin, p = 1.0 atmosphere
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [8]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">st_1</span><span class="o">.</span><span class="n">Tp</span> <span class="o">=</span> <span class="n">T_1</span><span class="p">,</span> <span class="n">p_1</span>
 <span class="n">st_1</span><span class="o">.</span><span class="n">pT</span> <span class="o">=</span> <span class="n">p_1</span><span class="p">,</span> <span class="n">T_1</span>
 </pre></div>
@@ -404,11 +434,11 @@ the other properties are lower case to indicate that they are
 mass-specific quantities.</p>
 </div>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [9]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;T_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;p_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;v_1 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_1</span><span class="o">.</span><span class="n">v</span><span class="p">))</span>
@@ -423,9 +453,9 @@ mass-specific quantities.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
 T_1 = 400.0 kelvin
 p_1 = 101324.99999999953 pascal
@@ -449,11 +479,11 @@ properties (possibly including the quality) to set the state. When we
 define the quality, the units are <code class="docutils literal"><span class="pre">dimensionless</span></code> or <code class="docutils literal"><span class="pre">percent</span></code>. For
 instance:</p>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [10]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">T_2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">100.0</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
 <span class="n">x_2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;dimensionless&#39;</span><span class="p">)</span>
 <span class="n">st_2</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T_2</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_2</span><span class="p">)</span>
@@ -468,9 +498,9 @@ instance:</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
 T_2 = 373.15 kelvin
 p_2 = 101417.99665788244 pascal
@@ -494,21 +524,21 @@ quality as above, or use the <code class="docutils literal"><span class="pre">'p
 exactly equivalent. The next cell should print <code class="docutils literal"><span class="pre">True</span></code> to the screen to
 demonstrate this.</p>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [11]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">x_2</span> <span class="o">==</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="s1">&#39;percent&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>Out[11]:
 </pre></div>
 </div>
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none"><div class="highlight"><pre>
 <span></span>True
 </pre></div>
 </div>
@@ -519,20 +549,20 @@ m3/kg, J/kg, and J/(kg-Kelvin). We can use the <code class="docutils literal"><s
 convert the units to anything we want, provided the dimensions are
 compatible. The syntax is <code class="docutils literal"><span class="pre">State.property.to('units')</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [12]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="k">print</span><span class="p">(</span><span class="n">st_2</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;degF&#39;</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">st_2</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;BTU/(lb*degR)&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
 212.00000039999995 degF
 0.4566499337207774 btu / degR / pound
@@ -553,19 +583,19 @@ closely. The error message will tell you why the dimensions are
 incompatible!</p>
 </div>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [13]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="k">print</span><span class="p">(</span><span class="n">st_2</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;joule&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
 
 <span class="ansi-red-fg">DimensionalityError</span>Traceback (most recent call last)
@@ -615,19 +645,19 @@ distance), and in terms of dimensions, <span class="math">\(M*L/T^2*L = L^2*M/T^
 dimensions are incompatible. A more subtle case might be trying to
 convert <strong>energy</strong> to <strong>power</strong> (again, not allowed):</p>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [14]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">Q_</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="s1">&#39;joule&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;watt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
 
 <span class="ansi-red-fg">DimensionalityError</span>Traceback (most recent call last)
@@ -667,18 +697,18 @@ convert <strong>energy</strong> to <strong>power</strong> (again, not allowed):<
 </div>
 </div>
 <div class="section" id="Summary">
-<h2>Summary<a class="headerlink" href="#Summary" title="Permalink to this headline">¶</a></h2>
+<h1>Summary<a class="headerlink" href="#Summary" title="Permalink to this headline">¶</a></h1>
 <p>In summary, we need to use two (2) <strong>independent and intensive</strong>
 properties to fix the state of any simple compressible system. We need
 to define these quantities with units using Pint, and then use them to
 set the conditions of a State. Then, we can access the other properties
 of the State by using the attributes.</p>
 <div class="nbinput docutils container">
-<div class="highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [15]:
 </pre></div>
 </div>
-<div class="highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
 <span></span><span class="n">h_3</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">2000.0</span><span class="p">,</span> <span class="s1">&#39;kJ/kg&#39;</span><span class="p">)</span>
 <span class="n">s_3</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">3.10</span><span class="p">,</span> <span class="s1">&#39;kJ/(kg*K)&#39;</span><span class="p">)</span>
 <span class="n">st_3</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">)</span>
@@ -694,9 +724,9 @@ of the State by using the attributes.</p>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="docutils container">
+<div class="prompt empty docutils container">
 </div>
-<div class="docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
 T_3 = 666.0536816976213 kelvin
 p_3 = 669560197.2594368 pascal
@@ -708,7 +738,6 @@ x_3 = None
 </pre></div></div>
 </div>
 </div>
-</div>
 
 
           </div>
@@ -718,12 +747,10 @@ x_3 = None
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Tutorial</a><ul>
+<li><a class="reference internal" href="#">Tutorial</a></li>
 <li><a class="reference internal" href="#Pint-and-Units">Pint and Units</a></li>
 <li><a class="reference internal" href="#ThermoState">ThermoState</a></li>
 <li><a class="reference internal" href="#Summary">Summary</a></li>
-</ul>
-</li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>
@@ -760,7 +787,7 @@ x_3 = None
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
       <a href="_sources/Tutorial.ipynb.txt"
