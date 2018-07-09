@@ -4,20 +4,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>ThermoState &#8212; thermostate 0.2.3 documentation</title>
+    <title>ThermoState &#8212; thermostate 0.2.4 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.2.3',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -31,13 +23,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-thermostate.thermostate">
@@ -52,14 +45,14 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>substance</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-obj docutils literal"><span class="pre">str</span></code></a>) – One of the substances supported by CoolProp</li>
-<li><strong>T</strong> (<code class="xref py py-obj docutils literal"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Temperature</li>
-<li><strong>p</strong> (<code class="xref py py-obj docutils literal"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Pressure</li>
-<li><strong>u</strong> (<code class="xref py py-obj docutils literal"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Mass-specific internal energy</li>
-<li><strong>s</strong> (<code class="xref py py-obj docutils literal"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Mass-specific entropy</li>
-<li><strong>v</strong> (<code class="xref py py-obj docutils literal"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Mass-specific volume</li>
-<li><strong>h</strong> (<code class="xref py py-obj docutils literal"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Mass-specific enthalpy</li>
-<li><strong>x</strong> (<code class="xref py py-obj docutils literal"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Quality</li>
+<li><strong>substance</strong> (<a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – One of the substances supported by CoolProp</li>
+<li><strong>T</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Temperature</li>
+<li><strong>p</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Pressure</li>
+<li><strong>u</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Mass-specific internal energy</li>
+<li><strong>s</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Mass-specific entropy</li>
+<li><strong>v</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Mass-specific volume</li>
+<li><strong>h</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Mass-specific enthalpy</li>
+<li><strong>x</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pint.UnitRegistry.Quantity</span></code>) – Quality</li>
 </ul>
 </td>
 </tr>
@@ -67,10 +60,27 @@
 </table>
 </dd></dl>
 
+<dl class="exception">
+<dt id="thermostate.thermostate.StateError">
+<em class="property">exception </em><code class="descclassname">thermostate.thermostate.</code><code class="descname">StateError</code><a class="headerlink" href="#thermostate.thermostate.StateError" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="thermostate.thermostate.render_traceback">
+<code class="descclassname">thermostate.thermostate.</code><code class="descname">render_traceback</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="headerlink" href="#thermostate.thermostate.render_traceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render a minimized version of the DimensionalityError traceback</p>
+<p>The default Jupyter/IPython traceback includes a lot of
+context from within pint that actually raises the
+DimensionalityError. This context isn’t really needed for
+this particular error, since the problem is almost certainly in
+the user code. This function removes the additional context.</p>
+</dd></dl>
+
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -91,12 +101,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -104,11 +116,11 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2017, Bryan W. Weber.
+      &copy;2018, Bryan W. Weber.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
       <a href="_sources/thermostate.rst.txt"
