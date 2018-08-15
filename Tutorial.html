@@ -258,9 +258,15 @@ units.</p>
 <p>Another way to specify the units is to use the <code class="docutils literal notranslate"><span class="pre">units</span></code> class that we
 imported. This class has a number of attributes (text following a
 period) that can be used to create a quantity with units by multiplying
-a number with the unit. Let’s set the temperature now. The available
-units of temperature are <code class="docutils literal notranslate"><span class="pre">degF</span></code> (<code class="docutils literal notranslate"><span class="pre">fahrenheit</span></code>), <code class="docutils literal notranslate"><span class="pre">degR</span></code>
-(<code class="docutils literal notranslate"><span class="pre">rankine</span></code>), <code class="docutils literal notranslate"><span class="pre">degC</span></code> (<code class="docutils literal notranslate"><span class="pre">celsius</span></code>), and <code class="docutils literal notranslate"><span class="pre">K</span></code> (<code class="docutils literal notranslate"><span class="pre">kelvin</span></code>).</p>
+a number with the unit.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">units</span><span class="o">.</span><span class="n">degR</span>
+<span class="c1">#     ^^^^</span>
+<span class="c1"># This is the attribute</span>
+</pre></div>
+</div>
+<p>Let’s set the temperature now. The available units of temperature are
+<code class="docutils literal notranslate"><span class="pre">degF</span></code> (<code class="docutils literal notranslate"><span class="pre">fahrenheit</span></code>), <code class="docutils literal notranslate"><span class="pre">degR</span></code> (<code class="docutils literal notranslate"><span class="pre">rankine</span></code>), <code class="docutils literal notranslate"><span class="pre">degC</span></code>
+(<code class="docutils literal notranslate"><span class="pre">celsius</span></code>), and <code class="docutils literal notranslate"><span class="pre">K</span></code> (<code class="docutils literal notranslate"><span class="pre">kelvin</span></code>).</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [4]:
@@ -296,6 +302,10 @@ should print <code class="docutils literal notranslate"><span class="pre">True</
 </pre></div>
 </div>
 </div>
+<p>Note the convention we are using here: the variables are named with the
+property, followed by an underscore, then the number of the state. In
+this case, we are setting properties for state 1, hence <code class="docutils literal notranslate"><span class="pre">T_1</span></code> and
+<code class="docutils literal notranslate"><span class="pre">p_1</span></code>.</p>
 </div>
 <div class="section" id="ThermoState">
 <h2>ThermoState<a class="headerlink" href="#ThermoState" title="Permalink to this headline">¶</a></h2>
@@ -315,28 +325,24 @@ substances are:</p>
 <li><code class="docutils literal notranslate"><span class="pre">oxygen</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">nitrogen</span></code></li>
 </ul>
+<p>Note that the name of the substance is case-insensitive (it doesn’t
+matter whether you use lower case or upper case). It is often easiest to
+set the name of the substance in a variable, like:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">st_1</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">)</span>
+<span></span><span class="n">substance</span> <span class="o">=</span> <span class="s1">&#39;water&#39;</span>
 </pre></div>
 </div>
 </div>
-<p>Note that the name of the substance is case-insensitive (it doesn’t
-matter whether you use lower case or upper case). Now that the state is
-created, we need to assign values for the properties. Properties of the
-state are accessed as attributes, and they must always be set in pairs,
-we cannot set a single property at a time. In this case we will access
-the <code class="docutils literal notranslate"><span class="pre">Tp</span></code> property of the state and set it equal to the temperature and
-pressure we defined above. The syntax is</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">Tp</span> <span class="o">=</span> <span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span>
-</pre></div>
-</div>
-<p>We could also use the <code class="docutils literal notranslate"><span class="pre">pT</span></code> property to accomplish the same thing</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state</span><span class="o">.</span><span class="n">pT</span> <span class="o">=</span> <span class="n">pressure</span><span class="p">,</span> <span class="n">temperature</span>
+<p>Now we need to create the <code class="docutils literal notranslate"><span class="pre">State</span></code> and assign values for the
+properties. Properties of the state are set as arguments to the
+<code class="docutils literal notranslate"><span class="pre">State</span></code> class, and they must always be set in pairs, we cannot set a
+single property at a time. The syntax is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">st</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">property_1</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">property_2</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Note that the capitalization of the properties is important! The <code class="docutils literal notranslate"><span class="pre">p</span></code>
@@ -347,6 +353,8 @@ time).</p>
 <p>Remember that two independent and intensive properties are required to
 set the state!</p>
 </div>
+<p>To demonstrate, we will set the <code class="docutils literal notranslate"><span class="pre">T</span></code> and <code class="docutils literal notranslate"><span class="pre">p</span></code> properties of the state
+and set them equal to the temperature and pressure we defined above.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [7]:
@@ -371,16 +379,52 @@ T = 400 kelvin, p = 1.0 atmosphere
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">st_1</span><span class="o">.</span><span class="n">Tp</span> <span class="o">=</span> <span class="n">T_1</span><span class="p">,</span> <span class="n">p_1</span>
-<span class="n">st_1</span><span class="o">.</span><span class="n">pT</span> <span class="o">=</span> <span class="n">p_1</span><span class="p">,</span> <span class="n">T_1</span>
+<span></span><span class="n">st_1</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T_1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_1</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<p>Note again the convention we are using here: The state is labeled by
+<code class="docutils literal notranslate"><span class="pre">st</span></code>, then an underscore, then the number of the state.</p>
+<p>The variables that we use on the right side of the equal sign in the
+<code class="docutils literal notranslate"><span class="pre">State</span></code> function can be named anything we want. For instance, the
+following code is exactly equivalent to what we did before.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">luke</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<span class="n">leia</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">400.0</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Does luke equal p_1?&#39;</span><span class="p">,</span> <span class="n">luke</span> <span class="o">==</span> <span class="n">p_1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Does leia equal T_1?&#39;</span><span class="p">,</span> <span class="n">leia</span> <span class="o">==</span> <span class="n">T_1</span><span class="p">)</span>
+<span class="n">st_starwars</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">leia</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">luke</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Does st_starwars equal st_1?&#39;</span><span class="p">,</span> <span class="n">st_starwars</span> <span class="o">==</span> <span class="n">st_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Does luke equal p_1? True
+Does leia equal T_1? True
+Does st_starwars equal st_1? True
+</pre></div></div>
+</div>
+<div class="admonition warning">
+<strong>Warning:</strong> To avoid confusing yourself, name your variables to
+something useful. For instance, use the property symbol, then an
+underscore, then the state number, as in <code class="docutils literal notranslate"><span class="pre">p_1</span> <span class="pre">=</span> <span class="pre">Q_(1.0,</span> <span class="pre">'atm')</span></code> to
+indicate the pressure at state 1. In my notes and solutions, this is the
+convention that I will follow, and I will use <code class="docutils literal notranslate"><span class="pre">st_#</span></code> to indicate a
+<code class="docutils literal notranslate"><span class="pre">State</span></code> (e.g., <code class="docutils literal notranslate"><span class="pre">st_1</span></code> is state 1, <code class="docutils literal notranslate"><span class="pre">st_2</span></code> is state 2, and so
+forth).</div>
 <p>In theory, any two pairs of independent properties can be used to set
 the state. In reality, the pairs of properties available to set the
 state is slightly limited because of the way the equation of state is
-written (we will talk about this in Chapter 11). The available pairs of
-properties are</p>
+written. The available pairs of properties are</p>
 <ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">Tp</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">Ts</span></code></li>
@@ -397,7 +441,7 @@ properties are</p>
 <li><code class="docutils literal notranslate"><span class="pre">hv</span></code></li>
 </ul>
 <p>The reverse of any of these pairs is also possible and totally
-equivalent, as demonstrated in the previous cell.</p>
+equivalent.</p>
 <p>By setting two properties in this way, the <code class="docutils literal notranslate"><span class="pre">State</span></code> class will
 calculate all the other properties we might be interested in. We can
 access the value of any property by getting the attribute for that
@@ -431,7 +475,7 @@ mass-specific quantities.</p>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [9]:
+<span></span>In [10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -476,7 +520,7 @@ define the quality, the units are <code class="docutils literal notranslate"><sp
 instance:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [10]:
+<span></span>In [11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -507,21 +551,13 @@ s_2 = 1911.9019425021506 joule / kelvin / kilogram
 x_2 = 0.1 dimensionless
 </pre></div></div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">This cell also demonstrates another way to set the state. Instead of
-first creating the <code class="docutils literal notranslate"><span class="pre">State</span></code> object and then setting the two properties,
-we can pass the properties in when the <code class="docutils literal notranslate"><span class="pre">State</span></code> is created</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">st</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
 <p>In addition, whether you use the <code class="docutils literal notranslate"><span class="pre">'dimensionless'</span></code> “units” for the
 quality as above, or use the <code class="docutils literal notranslate"><span class="pre">'percent'</span></code> “units”, the result is
 exactly equivalent. The next cell should print <code class="docutils literal notranslate"><span class="pre">True</span></code> to the screen to
 demonstrate this.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [11]:
+<span></span>In [12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -531,7 +567,7 @@ demonstrate this.</p>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>Out[11]:
+<span></span>Out[12]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
@@ -546,7 +582,7 @@ convert the units to anything we want, provided the dimensions are
 compatible. The syntax is <code class="docutils literal notranslate"><span class="pre">State.property.to('units')</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [12]:
+<span></span>In [13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -580,7 +616,7 @@ incompatible!</p>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [13]:
+<span></span>In [14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -595,7 +631,7 @@ incompatible!</p>
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">DimensionalityError</span>                       Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-13-9725ac474279&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">&lt;ipython-input-14-9725ac474279&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>print<span class="ansi-blue-fg">(</span>st_2<span class="ansi-blue-fg">.</span>T<span class="ansi-blue-fg">.</span>to<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;joule&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-red-fg">DimensionalityError</span>: Cannot convert from &#39;kelvin&#39; ([temperature]) to &#39;joule&#39; ([length] ** 2 * [mass] / [time] ** 2)
@@ -614,7 +650,7 @@ dimensions are incompatible. A more subtle case might be trying to
 convert <strong>energy</strong> to <strong>power</strong> (again, not allowed):</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [14]:
+<span></span>In [15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -629,7 +665,7 @@ convert <strong>energy</strong> to <strong>power</strong> (again, not allowed):<
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">DimensionalityError</span>                       Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-14-352febbe91fd&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">&lt;ipython-input-15-352febbe91fd&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>Q_<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1000.0</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;joule&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>to<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;watt&#39;</span><span class="ansi-blue-fg">)</span>
 
 <span class="ansi-red-fg">DimensionalityError</span>: Cannot convert from &#39;joule&#39; ([length] ** 2 * [mass] / [time] ** 2) to &#39;watt&#39; ([length] ** 2 * [mass] / [time] ** 3)
@@ -645,14 +681,13 @@ set the conditions of a State. Then, we can access the other properties
 of the State by using the attributes.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [15]:
+<span></span>In [16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">h_3</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">2000.0</span><span class="p">,</span> <span class="s1">&#39;kJ/kg&#39;</span><span class="p">)</span>
 <span class="n">s_3</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">3.10</span><span class="p">,</span> <span class="s1">&#39;kJ/(kg*K)&#39;</span><span class="p">)</span>
-<span class="n">st_3</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">)</span>
-<span class="n">st_3</span><span class="o">.</span><span class="n">hs</span> <span class="o">=</span> <span class="n">h_3</span><span class="p">,</span> <span class="n">s_3</span>
+<span class="n">st_3</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h_3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s_3</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;T_3 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_3</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;p_3 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_3</span><span class="o">.</span><span class="n">p</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;v_3 = {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st_3</span><span class="o">.</span><span class="n">v</span><span class="p">))</span>
@@ -687,15 +722,34 @@ x_3 = None
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Tutorial</a><ul>
-<li><a class="reference internal" href="#Pint-and-Units">Pint and Units</a></li>
-<li><a class="reference internal" href="#ThermoState">ThermoState</a></li>
-<li><a class="reference internal" href="#Summary">Summary</a></li>
+<h1 class="logo"><a href="index.html">thermostate</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=bryanwweber&repo=thermostate&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Pint-and-Units">Pint and Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ThermoState">ThermoState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Summary">Summary</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="thermostate.html">ThermoState</a></li>
 </ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -705,13 +759,6 @@ x_3 = None
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/Tutorial.ipynb.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -732,7 +779,7 @@ x_3 = None
       &copy;2018, Bryan W. Weber.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
