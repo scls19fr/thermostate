@@ -672,6 +672,46 @@ convert <strong>energy</strong> to <strong>power</strong> (again, not allowed):<
 </pre></div></div>
 </div>
 </div>
+<div class="section" id="Other-Common-Errors">
+<h2>Other Common Errors<a class="headerlink" href="#Other-Common-Errors" title="Permalink to this headline">¶</a></h2>
+<p>Other common errors generated from using ThermoState will raise
+<code class="docutils literal notranslate"><span class="pre">StateErrors</span></code>. These errors may be due to</p>
+<ol class="arabic simple">
+<li>Not specifying enough properties to fix the state, or specifying too
+many properties to fix the state</li>
+<li>Specifying a pair of properties that are not independent at the
+desired condtions</li>
+<li>Entering an unsupported pair of property inputs (the currently
+unsupported pairs are <code class="docutils literal notranslate"><span class="pre">Tu</span></code>, <code class="docutils literal notranslate"><span class="pre">Th</span></code>, and <code class="docutils literal notranslate"><span class="pre">us</span></code>, due to limitations
+in CoolProp)</li>
+<li>Specifying a <code class="docutils literal notranslate"><span class="pre">Quantity</span></code> with incorrect dimensions for the property
+input</li>
+</ol>
+<p>An example demonstrating #4 from above:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">State</span><span class="p">(</span><span class="s1">&#39;water&#39;</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="n">Q_</span><span class="p">(</span><span class="mf">1000.0</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">),</span> <span class="n">p</span><span class="o">=</span><span class="n">Q_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;bar&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">StateError</span>                                Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-16-95363eb6e667&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>State<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;water&#39;</span><span class="ansi-blue-fg">,</span> v<span class="ansi-blue-fg">=</span>Q_<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1000.0</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;degC&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> p<span class="ansi-blue-fg">=</span>Q_<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">1.0</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;bar&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+
+<span class="ansi-red-fg">StateError</span>: The dimensions for v must be [length] ** 3 / [mass]
+</pre></div></div>
+</div>
+</div>
 <div class="section" id="Summary">
 <h2>Summary<a class="headerlink" href="#Summary" title="Permalink to this headline">¶</a></h2>
 <p>In summary, we need to use two (2) <strong>independent and intensive</strong>
@@ -681,7 +721,7 @@ set the conditions of a State. Then, we can access the other properties
 of the State by using the attributes.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
-<span></span>In [16]:
+<span></span>In [17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -744,6 +784,7 @@ x_3 = None
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#Pint-and-Units">Pint and Units</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ThermoState">ThermoState</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Other-Common-Errors">Other Common Errors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Summary">Summary</a></li>
 </ul>
 </li>
@@ -779,7 +820,7 @@ x_3 = None
       &copy;2018, Bryan W. Weber.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
