@@ -1,0 +1,749 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Regen-Reheat Rankine Cycle Example &#8212; thermostate 0.3.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ThermoState" href="thermostate.html" />
+    <link rel="prev" title="Rankine Cycle Example" href="rankine-cycle-example.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Regen-Reheat-Rankine-Cycle-Example">
+<h1>Regen-Reheat Rankine Cycle Example<a class="headerlink" href="#Regen-Reheat-Rankine-Cycle-Example" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Imports">
+<h2>Imports<a class="headerlink" href="#Imports" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">thermostate</span> <span class="kn">import</span> <span class="n">State</span><span class="p">,</span> <span class="n">Q_</span><span class="p">,</span> <span class="n">units</span><span class="p">,</span> <span class="n">SystemInternational</span> <span class="k">as</span> <span class="n">SI</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Definitions">
+<h2>Definitions<a class="headerlink" href="#Definitions" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">substance</span> <span class="o">=</span> <span class="s1">&#39;water&#39;</span>
+<span class="n">T_1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">480.0</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+<span class="n">p_1</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">12.0</span><span class="p">,</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+<span class="n">p_2</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+<span class="n">p_3</span> <span class="o">=</span> <span class="n">p_2</span>
+<span class="n">T_3</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">440.0</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+<span class="n">p_4</span> <span class="o">=</span> <span class="n">p_7</span> <span class="o">=</span> <span class="n">p_8</span> <span class="o">=</span> <span class="n">p_12</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+<span class="n">p_5</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="s1">&#39;kPa&#39;</span><span class="p">)</span>
+<span class="n">x_6</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;dimensionless&#39;</span><span class="p">)</span>
+<span class="n">x_8</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;dimensionless&#39;</span><span class="p">)</span>
+<span class="n">p_10</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">12.0</span><span class="p">,</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+<span class="n">T_10</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">210.0</span><span class="p">,</span> <span class="s1">&#39;degC&#39;</span><span class="p">)</span>
+<span class="n">x_11</span> <span class="o">=</span> <span class="n">Q_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;dimensionless&#39;</span><span class="p">)</span>
+<span class="n">p_11</span> <span class="o">=</span> <span class="n">p_2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="Problem-Statement">
+<h2>Problem Statement<a class="headerlink" href="#Problem-Statement" title="Permalink to this headline">¶</a></h2>
+<p>Consider a regenerative vapor power cycle with two feedwater heaters, a
+closed one and an open one, and reheat. Steam enters the first turbine
+stage at 12.0 MPa, 480.0 celsius, and expands to 2.0 MPa. Some steam is
+extracted at 2.0 MPa and bled to the closed feedwater heater. The
+remainder is reheated at 2.0 MPa to 440.0 celsius and then expands
+through the second stage turbine, where an additional amount of steam is
+extracted and bled into the open feedwater heater operating at 0.3 MPa.
+The steam expanding through the third stage turbine exits at the
+condenser pressure of 6.0 kPa, and the steam exits the condenser as a
+saturated liquid at 6.0 kPa. Feedwater leaves the closed heater at 210.0
+celsius, 12.0 MPa, and condensate exiting as saturated liquid at 2.0 MPa
+is trapped into the open feedwater heater. Saturated liquid at 0.3 MPa
+leaves the open feedwater heater. Assume all pumps and turbine stages
+operate isentropically. Determine for the cycle</p>
+<ol class="arabic simple">
+<li>the heat transfer to the working fluid passing through the steam
+generator and reheater, in kJ per kg of steam entering the first
+stage turbine</li>
+<li>the thermal efficiency</li>
+<li>the heat transfer from the working fluid passing through the
+condenser to the cooling water, in kJ per kg of steam entering the
+first stage turbine</li>
+</ol>
+</div>
+<hr class="docutils" />
+<div class="section" id="Solution">
+<h2>Solution<a class="headerlink" href="#Solution" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="1.-the-heat-transfer-in-the-steam-generator-and-reheater">
+<h3>1. the heat transfer in the steam generator and reheater<a class="headerlink" href="#1.-the-heat-transfer-in-the-steam-generator-and-reheater" title="Permalink to this headline">¶</a></h3>
+<p>The heat transfer can be found by drawing a control volume around the
+boiler/steam generator, including the reheat portion. Then, the first
+law reduces to</p>
+<div class="math notranslate nohighlight">
+\begin{align*}
+\dot{Q}_{in} &amp;= \dot{m}_1\left(h_1 - h_{10}\right) + \dot{m}_3\left(h_3 - h_2\right) \\
+\frac{\dot{Q}_{in}}{\dot{m}_1} &amp;= \left(h_1 - h_{10}\right) + \left(1 - y'\right)\left(h_3 - h_2\right)
+\end{align*}</div><p>where <span class="math notranslate nohighlight">\(y'\)</span> is the fraction of the flow extracted to the closed
+feedwater heater. To find the value of <span class="math notranslate nohighlight">\(y'\)</span>, we draw a control
+volume around the closed feedwater heater and solve for <span class="math notranslate nohighlight">\(y'\)</span></p>
+<div class="math notranslate nohighlight">
+\begin{align*}
+y' = \frac{h_{10} - h_9}{h_2 - h_{11}}
+\end{align*}</div><p>First, fix the values for all the states using given information.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># State 1</span>
+<span class="n">st_1</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T_1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_1</span><span class="p">)</span>
+<span class="n">h_1</span> <span class="o">=</span> <span class="n">st_1</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">s_1</span> <span class="o">=</span> <span class="n">st_1</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># State 2</span>
+<span class="n">s_2</span> <span class="o">=</span> <span class="n">s_1</span>
+<span class="n">st_2</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_2</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s_2</span><span class="p">)</span>
+<span class="n">h_2</span> <span class="o">=</span> <span class="n">st_2</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">T_2</span> <span class="o">=</span> <span class="n">st_2</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">x_2</span> <span class="o">=</span> <span class="n">st_2</span><span class="o">.</span><span class="n">x</span>
+
+<span class="c1"># State 3</span>
+<span class="n">st_3</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_3</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T_3</span><span class="p">)</span>
+<span class="n">h_3</span> <span class="o">=</span> <span class="n">st_3</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">s_3</span> <span class="o">=</span> <span class="n">st_3</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># State 4</span>
+<span class="n">s_4</span> <span class="o">=</span> <span class="n">s_3</span>
+<span class="n">st_4</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_4</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s_4</span><span class="p">)</span>
+<span class="n">h_4</span> <span class="o">=</span> <span class="n">st_4</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">T_4</span> <span class="o">=</span> <span class="n">st_4</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">x_4</span> <span class="o">=</span> <span class="n">st_4</span><span class="o">.</span><span class="n">x</span>
+
+<span class="c1"># State 5</span>
+<span class="n">s_5</span> <span class="o">=</span> <span class="n">s_4</span>
+<span class="n">st_5</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_5</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s_5</span><span class="p">)</span>
+<span class="n">h_5</span> <span class="o">=</span> <span class="n">st_5</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">T_5</span> <span class="o">=</span> <span class="n">st_5</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">x_5</span> <span class="o">=</span> <span class="n">st_5</span><span class="o">.</span><span class="n">x</span>
+
+<span class="c1"># State 6</span>
+<span class="n">p_6</span> <span class="o">=</span> <span class="n">p_5</span>
+<span class="n">st_6</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_6</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_6</span><span class="p">)</span>
+<span class="n">h_6</span> <span class="o">=</span> <span class="n">st_6</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">s_6</span> <span class="o">=</span> <span class="n">st_6</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+<span class="n">T_6</span> <span class="o">=</span> <span class="n">st_6</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># State 7</span>
+<span class="n">s_7</span> <span class="o">=</span> <span class="n">s_6</span>
+<span class="n">st_7</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_7</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s_7</span><span class="p">)</span>
+<span class="n">h_7</span> <span class="o">=</span> <span class="n">st_7</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">T_7</span> <span class="o">=</span> <span class="n">st_7</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># State 8</span>
+<span class="n">st_8</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_8</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_8</span><span class="p">)</span>
+<span class="n">h_8</span> <span class="o">=</span> <span class="n">st_8</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">s_8</span> <span class="o">=</span> <span class="n">st_8</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+<span class="n">T_8</span> <span class="o">=</span> <span class="n">st_8</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># State 9</span>
+<span class="n">s_9</span> <span class="o">=</span> <span class="n">s_8</span>
+<span class="n">p_9</span> <span class="o">=</span> <span class="n">p_10</span>
+<span class="n">st_9</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_9</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">s_9</span><span class="p">)</span>
+<span class="n">h_9</span> <span class="o">=</span> <span class="n">st_9</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">T_9</span> <span class="o">=</span> <span class="n">st_9</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># State 10</span>
+<span class="n">st_10</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_10</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T_10</span><span class="p">)</span>
+<span class="n">h_10</span> <span class="o">=</span> <span class="n">st_10</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">s_10</span> <span class="o">=</span> <span class="n">st_10</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+
+<span class="c1"># State 11</span>
+<span class="n">st_11</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_11</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_11</span><span class="p">)</span>
+<span class="n">h_11</span> <span class="o">=</span> <span class="n">st_11</span><span class="o">.</span><span class="n">h</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+<span class="n">s_11</span> <span class="o">=</span> <span class="n">st_11</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+<span class="n">T_11</span> <span class="o">=</span> <span class="n">st_11</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># State 12</span>
+<span class="n">h_12</span> <span class="o">=</span> <span class="n">h_11</span>
+<span class="n">st_12</span> <span class="o">=</span> <span class="n">State</span><span class="p">(</span><span class="n">substance</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p_12</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h_12</span><span class="p">)</span>
+<span class="n">s_12</span> <span class="o">=</span> <span class="n">st_12</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+<span class="n">T_12</span> <span class="o">=</span> <span class="n">st_12</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">SI</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">x_12</span> <span class="o">=</span> <span class="n">st_12</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<p>Summarizing the states,</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">State</th>
+<th class="head">T</th>
+<th class="head">p</th>
+<th class="head">h</th>
+<th class="head">s</th>
+<th class="head">x</th>
+<th class="head">phase</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>480.00
+celsius</td>
+<td>12.00
+MPa</td>
+<td>3295.29
+kJ/kg</td>
+<td>6.4186
+kJ/(K
+kg)</td>
+<td>—</td>
+<td>supercr
+itical</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>225.46
+celsius</td>
+<td>2.00
+MPa</td>
+<td>2837.44
+kJ/kg</td>
+<td>6.4186
+kJ/(K
+kg)</td>
+<td>—</td>
+<td>gas</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>440.00
+celsius</td>
+<td>2.00
+MPa</td>
+<td>3336.25
+kJ/kg</td>
+<td>7.2560
+kJ/(K
+kg)</td>
+<td>—</td>
+<td>supercr
+itical</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>187.07
+celsius</td>
+<td>0.30
+MPa</td>
+<td>2839.24
+kJ/kg</td>
+<td>7.2560
+kJ/(K
+kg)</td>
+<td>—</td>
+<td>gas</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>36.16
+celsius</td>
+<td>6.00
+kPa</td>
+<td>2234.74
+kJ/kg</td>
+<td>7.2560
+kJ/(K
+kg)</td>
+<td>86.26%</td>
+<td>twophas
+e</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>36.16
+celsius</td>
+<td>6.00
+kPa</td>
+<td>151.48
+kJ/kg</td>
+<td>0.5208
+kJ/(K
+kg)</td>
+<td>0.00%</td>
+<td>twophas
+e</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>36.17
+celsius</td>
+<td>0.30
+MPa</td>
+<td>151.77
+kJ/kg</td>
+<td>0.5208
+kJ/(K
+kg)</td>
+<td>—</td>
+<td>liquid</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>133.52
+celsius</td>
+<td>0.30
+MPa</td>
+<td>561.43
+kJ/kg</td>
+<td>1.6717
+kJ/(K
+kg)</td>
+<td>0.00%</td>
+<td>twophas
+e</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>134.62
+celsius</td>
+<td>12.00
+MPa</td>
+<td>573.95
+kJ/kg</td>
+<td>1.6717
+kJ/(K
+kg)</td>
+<td>—</td>
+<td>liquid</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>210.00
+celsius</td>
+<td>12.00
+MPa</td>
+<td>901.29
+kJ/kg</td>
+<td>2.4077
+kJ/(K
+kg)</td>
+<td>—</td>
+<td>liquid</td>
+</tr>
+<tr class="row-even"><td>11</td>
+<td>212.38
+celsius</td>
+<td>2.00
+MPa</td>
+<td>908.50
+kJ/kg</td>
+<td>2.4468
+kJ/(K
+kg)</td>
+<td>0.00%</td>
+<td>twophas
+e</td>
+</tr>
+<tr class="row-odd"><td>12</td>
+<td>133.52
+celsius</td>
+<td>0.30
+MPa</td>
+<td>908.50
+kJ/kg</td>
+<td>2.5252
+kJ/(K
+kg)</td>
+<td>16.04%</td>
+<td>twophas
+e</td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">y_p</span> <span class="o">=</span> <span class="p">(</span><span class="n">h_10</span> <span class="o">-</span> <span class="n">h_9</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">h_2</span> <span class="o">-</span> <span class="n">h_11</span><span class="p">)</span>
+<span class="n">Qdot_in</span> <span class="o">=</span> <span class="p">(</span><span class="n">h_1</span> <span class="o">-</span> <span class="n">h_10</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y_p</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">h_3</span> <span class="o">-</span> <span class="n">h_2</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kJ/kg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="alert alert-success"><p><strong>Answer:</strong> The heat transfer input is <span class="math notranslate nohighlight">\(\dot{Q}_{in}/\dot{m} =\)</span>
+2808.15 kJ/kg</p>
+</div></div>
+<div class="section" id="2.-the-thermal-efficiency">
+<h3>2. the thermal efficiency<a class="headerlink" href="#2.-the-thermal-efficiency" title="Permalink to this headline">¶</a></h3>
+<p>To find the thermal efficiency, we need to calculate the net work output
+of the power plant. This involves all three turbine stages and both of
+the pump stages. First, we need to calculate the mass fractions of the
+flow, <span class="math notranslate nohighlight">\(y'\)</span> and <span class="math notranslate nohighlight">\(y''\)</span>. To find these values, we need to draw
+control volumes around the feedwater heaters, moving from high pressure
+to low pressure. <span class="math notranslate nohighlight">\(y'\)</span> has already been found, so we need to find
+<span class="math notranslate nohighlight">\(y''\)</span></p>
+<div class="math notranslate nohighlight">
+\begin{align*}
+0 &amp;= \dot{m}_7 h_7 + \dot{m}_{12} h_{12} + \dot{m}_{4} h_4 - \dot{m}_8 h_8
+\end{align*}</div><p>Dividing through by <span class="math notranslate nohighlight">\(\dot{m}_1\)</span> and noting that
+<span class="math notranslate nohighlight">\(\dot{m}_8 = \dot{m}_1\)</span>, <span class="math notranslate nohighlight">\(\dot{m}_{12} = \dot{m}_2\)</span>, and
+<span class="math notranslate nohighlight">\(\dot{m}_7 = \dot{m}_5\)</span>,</p>
+<div class="math notranslate nohighlight">
+\begin{align*}
+0 &amp;= (1 - y' - y'')h_7 + y' h_{12} + y'' h_4 - h_8 \\
+y'' &amp;= \frac{h_8 - h_7 + y'(h_7 - h_{12})}{h_4 - h_7}
+\end{align*}</div><div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">y_pp</span> <span class="o">=</span> <span class="p">(</span><span class="n">h_8</span> <span class="o">-</span> <span class="n">h_7</span> <span class="o">+</span> <span class="n">y_p</span><span class="o">*</span><span class="p">(</span><span class="n">h_7</span> <span class="o">-</span> <span class="n">h_12</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">h_4</span> <span class="o">-</span> <span class="n">h_7</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now, for the turbine stages,</p>
+<div class="math notranslate nohighlight">
+\begin{align*}
+\dot{W}_t &amp;= \dot{m}_1(h_1 - h_2) + \dot{m}_3 (h_3 - h_4) + \dot{m}_5 (h_4 - h_5) \\
+\frac{\dot{W}_t}{\dot{m}_1} &amp;= h_1 - h_2 + (1 - y')(h_3 - h_4) + (1 - y' - y'')(h_4 - h_5)
+\end{align*}</div><div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Wdot_t</span> <span class="o">=</span> <span class="n">h_1</span> <span class="o">-</span> <span class="n">h_2</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y_p</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">h_3</span> <span class="o">-</span> <span class="n">h_4</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y_p</span> <span class="o">-</span> <span class="n">y_pp</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">h_4</span> <span class="o">-</span> <span class="n">h_5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>and for the pump stages</p>
+<div class="math notranslate nohighlight">
+\begin{align*}
+\dot{W}_p &amp;= \dot{m}_6(h_6 - h_7) + \dot{m}_8(h_8 - h_9) \\
+\frac{\dot{W}_p}{\dot{m}_1} &amp;= (1 - y' - y'')(h_6 - h_7) + h_8 - h_9
+\end{align*}</div><div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Wdot_p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y_p</span> <span class="o">-</span> <span class="n">y_pp</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">h_6</span> <span class="o">-</span> <span class="n">h_7</span><span class="p">)</span> <span class="o">+</span> <span class="n">h_8</span> <span class="o">-</span> <span class="n">h_9</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="p">((</span><span class="n">Wdot_t</span> <span class="o">+</span> <span class="n">Wdot_p</span><span class="p">)</span><span class="o">/</span><span class="n">Qdot_in</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;dimensionless&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="alert alert-success"><p><strong>Answer:</strong> The thermal efficiency of the cycle is <span class="math notranslate nohighlight">\(\eta =\)</span> 0.4617
+= 46.17%</p>
+</div></div>
+<div class="section" id="3.-the-rate-of-heat-transfer-out-of-the-condenser-into-the-cooling-water">
+<h3>3. the rate of heat transfer out of the condenser into the cooling water<a class="headerlink" href="#3.-the-rate-of-heat-transfer-out-of-the-condenser-into-the-cooling-water" title="Permalink to this headline">¶</a></h3>
+<p>Drawing a control volume around the condenser, we can find the rate of
+heat transfer as</p>
+<div class="math notranslate nohighlight">
+\begin{align*}
+\dot{Q}_{out} &amp;= \dot{m}_5(h_6 - h_5) \\
+\frac{\dot{Q}_{out}}{\dot{m}_1} &amp;= (1 - y' - y'') (h_6 - h_5)
+\end{align*}</div><div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">Qdot_out</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y_p</span> <span class="o">-</span> <span class="n">y_pp</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">h_6</span> <span class="o">-</span> <span class="n">h_5</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;kJ/kg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="alert alert-success"><p><strong>Answer:</strong> The rate of heat transfer is
+<span class="math notranslate nohighlight">\(\dot{Q}_{out}/\dot{m}_1 =\)</span> -1511.72 kJ/kg</p>
+</div></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">thermostate</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=bryanwweber&repo=thermostate&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="air-standard-brayton-cycle-example.html">Air-Standard Brayton Cycle Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cold-air-brayton-cycle-example.html">Cold-Air Standard Brayton Cycle Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="diesel-cycle-example.html">Diesel Cycle Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rankine-cycle-example.html">Rankine Cycle Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Regen-Reheat Rankine Cycle Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="thermostate.html">ThermoState</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="examples.html">Examples</a><ul>
+      <li>Previous: <a href="rankine-cycle-example.html" title="previous chapter">Rankine Cycle Example</a></li>
+      <li>Next: <a href="thermostate.html" title="next chapter">ThermoState</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<div class="footer">
+  Documentation licensed under a
+  <a href="https://creativecommons.org/licenses/by/4.0/">
+    CC-BY 4.0 License.
+  </a>
+  
+  |
+  Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
+  &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+  
+  |
+  <a href="_sources/regen-reheat-rankine-cycle-example.ipynb.txt"
+      rel="nofollow">Page source</a>
+  </div>
+
+  
+  <a href="https://github.com/bryanwweber/thermostate" class="github">
+    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+  </a>
+  
+</div>
+  </body>
+</html>
